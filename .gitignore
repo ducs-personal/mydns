@@ -1,0 +1,34 @@
+# Common
+*~
+.project
+.pydevproject
+.settings
+udp_main
+
+#project
+*.log
+log/*
+.config
+
+# Python:
+*.py[cod]
+*.so
+*.egg
+*.egg-info
+dist
+
+# C:
+*.o
+*.a
+*.ko
+*.cmd
+*.symvers
+*.order
+*.mod.*
+.tmp_versions
+udp_lib
+net_filter
+platform_service
+gmonitor
+rmc
+adwall
