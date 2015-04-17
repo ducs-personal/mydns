@@ -1,0 +1,22 @@
+LIB_SRC = $(wildcard *.c ../lib/*.c)  
+#LIB_OBJ = $(patsubst %.c,%.o,$(notdir $(LIB_SRC))) 
+LIB_OBJ = $(patsubst %.c,%.o,$(LIB_SRC))
+KERNEL_INCLUDE ?= /lib/modules/$(shell uname -r)/build/include
+
+LIB_TARGET=rmc 
+
+CC=$(CCPRE)cc
+
+CFLAGS = -g -Wall -fPIC  -I../udp_lib/incl/  -I../platform_service/incl/
+LDFLAGS += -lpthread -L../udp_lib/src/ -ludp -L../platform_service/client/  -lplatform
+#all:
+#	@echo $(LIB_SRC)
+#	@echo $(LIB_OBJ)
+#
+$(LIB_TARGET): $(LIB_OBJ)
+	$(CC) -o $@ $^ $(LDFLAGS) 
+%.o:%.c
+	@$(CC) $(CFLAGS) -o $@ -c $^ $(LDFLAGS)
+
+clean:
+	rm *.o  $(LIB_TARGET)

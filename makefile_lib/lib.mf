@@ -1,0 +1,23 @@
+LIB_SRC = $(wildcard *.c ../lib/*.c)  
+#LIB_OBJ = $(patsubst %.c,%.o,$(notdir $(LIB_SRC))) 
+LIB_OBJ = $(patsubst %.c,%.o,$(LIB_SRC))
+KERNEL_INCLUDE ?= /lib/modules/$(shell uname -r)/build/include
+
+LIB_TARGET = libudp.a
+
+CC=$(CCPRE)gcc
+AR=$(CCPRE)ar
+
+CFLAGS =  -fPIC -I../incl
+LDFLAGS += -lpthread
+#all:
+#	@echo $(LIB_SRC)
+#	@echo $(LIB_OBJ)
+#
+$(LIB_TARGET): $(LIB_OBJ)
+	$(AR) -r $@ $^
+%.o:%.c
+	@$(CC) $(CFLAGS) -o $@ -c $^ $(LDFLAGS) -static
+
+clean:
+	rm *.o *.a ../lib/*.o
